@@ -28,7 +28,7 @@ module.exports = function(grunt) {
       },
       js : {
         files: 'src/js/*.js',
-        tasks : ['concat'],
+        tasks : ['concat','babel'],
         options: {
           livereload: true,
         }
@@ -81,6 +81,17 @@ module.exports = function(grunt) {
         dest: 'src/app.js'
       }
     },
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['@babel/preset-env']
+      },
+      dist: {
+        files: {
+          'src/app.js': 'src/app.js'
+        }
+      }
+    },
     htmlmin: {                                    
       dist: {                                     
         options: {                               
@@ -102,8 +113,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-babel');
 
 
-  grunt.registerTask('build', ['concat','uglify','sass','copy','cssmin','clean','htmlmin']);
+  grunt.registerTask('build', ['concat','babel','uglify','sass','copy','cssmin','clean','htmlmin']);
 
 };
